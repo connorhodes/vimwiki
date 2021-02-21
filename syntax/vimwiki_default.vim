@@ -104,7 +104,11 @@ let s:default_syntax.bold_search = '\%(^\|\s\|[[:punct:]]\)\@<=\*\zs\%([^*`[:spa
       \ '[^*`[:space:]]\|[^*`[:space:]]\)\ze\*\%([[:punct:]]\|\s\|$\)\@='
 let s:default_syntax.bold_match = '\%(^\|\s\|[[:punct:]]\)\@<=\*__Text__\*'.
       \ '\%([[:punct:]]\|\s\|$\)\@='
+
+" TODO here is the wikilink regex. Is there a way to insert this into my vimrc/tpope-markdown to
+" augment native markdown support to support wiki-links? Also, what about [link.md|alias pipes]
 let s:default_syntax.wikilink = '\[\[\zs[^\\\]|]\+\ze\%(|[^\\\]]\+\)\?\]\]'
+
 let s:default_syntax.tag_search = '\(^\|\s\)\zs:\([^:''[:space:]]\+:\)\+\ze\(\s\|$\)'
 let s:default_syntax.tag_match =  '\(^\|\s\):\([^:''[:space:]]\+:\)*__Tag__:'.
       \ '\([^:[:space:]]\+:\)*\(\s\|$\)'

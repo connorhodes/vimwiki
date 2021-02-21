@@ -1,3 +1,9 @@
+### Connor Rhodes VimWiki fork
+
+I use Vim with VimWiki to access my [Obsidian](https://obsidian.md/) vault. This fork disables settings I don't use and to increase performance and compatibility with my use case.
+
+---
+
 ![VimWiki: A Personal Wiki For Vim](doc/splash.png)
 
 [中文](README-cn.md)
