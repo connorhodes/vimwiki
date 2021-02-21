@@ -240,7 +240,6 @@ command! -buffer -bang VimwikiAll2HTML
 command! -buffer VimwikiTOC call vimwiki#base#table_of_contents(1)
 
 command! -buffer VimwikiNextTask call vimwiki#base#find_next_task()
-command! -buffer VimwikiNextLink call vimwiki#base#find_next_link()
 command! -buffer VimwikiPrevLink call vimwiki#base#find_prev_link()
 command! -buffer VimwikiDeleteFile call vimwiki#base#delete_link()
 command! -buffer VimwikiDeleteLink
@@ -361,8 +360,6 @@ nnoremap <silent><script><buffer> <Plug>VimwikiTabnewLink
     \ :VimwikiTabnewLink<CR>
 nnoremap <silent><script><buffer> <Plug>VimwikiGoBackLink
     \ :VimwikiGoBackLink<CR>
-nnoremap <silent><script><buffer> <Plug>VimwikiNextLink
-    \ :VimwikiNextLink<CR>
 nnoremap <silent><script><buffer> <Plug>VimwikiPrevLink
     \ :VimwikiPrevLink<CR>
 nnoremap <silent><script><buffer> <Plug>VimwikiGoto
@@ -387,7 +384,6 @@ if str2nr(vimwiki#vars#get_global('key_mappings').links)
   call vimwiki#u#map_key('n', '<D-CR>', '<Plug>VimwikiTabnewLink')
   call vimwiki#u#map_key('n', '<C-S-CR>', '<Plug>VimwikiTabnewLink', 1)
   call vimwiki#u#map_key('n', '<BS>', '<Plug>VimwikiGoBackLink')
-  call vimwiki#u#map_key('n', '<TAB>', '<Plug>VimwikiNextLink')
   call vimwiki#u#map_key('n', '<S-TAB>', '<Plug>VimwikiPrevLink')
   call vimwiki#u#map_key('n', vimwiki#vars#get_global('map_prefix').'n', '<Plug>VimwikiGoto')
   call vimwiki#u#map_key('n', vimwiki#vars#get_global('map_prefix').'d', '<Plug>VimwikiDeleteFile')
