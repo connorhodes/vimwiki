@@ -105,23 +105,6 @@ function! s:setup_buffer_enter() abort
   call s:set_global_options()
 endfunction
 
-
-" this is called when the buffer enters a window or when running a  diff
-function! s:setup_buffer_win_enter() abort
-  " don't do anything if it's not managed by Vimwiki (that is, when it's not in
-  " a registered wiki and not a temporary wiki)
-  if vimwiki#vars#get_bufferlocal('wiki_nr') == -1
-    return
-  endif
-
-  if !vimwiki#u#ft_is_vw()
-    call vimwiki#u#ft_set()
-  endif
-
-  call s:set_windowlocal_options()
-endfunction
-
-
 function! s:setup_cleared_syntax() abort
   " highlight groups that get cleared
   " on colorscheme change because they are not linked to Vim-predefined groups
@@ -168,39 +151,6 @@ function! s:set_global_options() abort
 endfunction
 
 
-" Set settings which are local to a window. In a new tab they would be reset to
-" Vim defaults. So we enforce our settings here when the cursor enters a
-" Vimwiki buffer.
-function! s:set_windowlocal_options() abort
-  if !&diff   " if Vim is currently in diff mode, don't interfere with its folding
-    let foldmethod = vimwiki#vars#get_global('folding')
-    if foldmethod =~? '^expr.*'
-      setlocal foldmethod=expr
-      setlocal foldexpr=VimwikiFoldLevel(v:lnum)
-      setlocal foldtext=VimwikiFoldText()
-    elseif foldmethod =~? '^list.*' || foldmethod =~? '^lists.*'
-      setlocal foldmethod=expr
-      setlocal foldexpr=VimwikiFoldListLevel(v:lnum)
-      setlocal foldtext=VimwikiFoldText()
-    elseif foldmethod =~? '^syntax.*'
-      setlocal foldmethod=syntax
-      setlocal foldtext=VimwikiFoldText()
-    elseif foldmethod =~? '^custom.*'
-      " do nothing
-    else
-      setlocal foldmethod=manual
-      normal! zE
-    endif
-  endif
-
-  if vimwiki#vars#get_global('conceallevel') && exists('+conceallevel')
-    let &conceallevel = vimwiki#vars#get_global('conceallevel')
-  endif
-
-  if vimwiki#vars#get_global('auto_chdir')
-    exe 'lcd' vimwiki#vars#get_wikilocal('path')
-  endif
-endfunction
 
 
 function! s:get_version() abort
@@ -316,9 +266,7 @@ augroup vimwiki
   exe 'autocmd BufNewFile,BufRead '.pat.' call s:setup_new_wiki_buffer()'
   exe 'autocmd BufEnter '.pat.' call s:setup_buffer_enter()'
   exe 'autocmd BufLeave '.pat.' call s:setup_buffer_leave()'
-  exe 'autocmd BufWinEnter '.pat.' call s:setup_buffer_win_enter()'
   if exists('##DiffUpdated')
-    exe 'autocmd DiffUpdated '.pat.' call s:setup_buffer_win_enter()'
   endif
   " automatically generate a level 1 header for new files
   exe 'autocmd BufNewFile '.pat.' call s:create_h1(expand("%:p"))'
